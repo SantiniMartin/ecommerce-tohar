@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Tohar Deco{% endblock %}
+
+{% block content %}
+<div class="product-detail-container">
+    <div class="product-detail-grid">
+        <!-- Image Section -->
+        <div class="detail-image-section">
+            <div class="main-image-container">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="detail-image">
+                {% else %}
+                <div class="detail-image-placeholder"></div>
+                {% endif %}
+
+                {% if product.discount_percentage > 0 %}
+                <span class="detail-discount-badge">%{{ product.discount_percentage }} OFF</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="detail-info-section">
+            <nav class="breadcrumb">
+                <a href="{% url 'home' %}">Inicio</a> &gt;
+                <a href="{% url 'product_list' %}">Productos</a> &gt;
+                <span class="current">{{ product.name }}</span>
+            </nav>
+
+            <h1 class="detail-title">{{ product.name }}</h1>
+            <p class="detail-category">Categoría: <a
+                    href="{% url 'product_list' %}?category={{ product.category.id }}">{{ product.category.name }}</a>
+            </p>
+
+            <div class="detail-price-container">
+                {% if product.discount_percentage > 0 %}
+                <span class="detail-old-price">${{ product.price }}</span>
+                <span class="detail-current-price">${{ product.final_price|floatformat:0 }}</span>
+                {% else %}
+                <span class="detail-current-price">${{ product.price }}</span>
+                {% endif %}
+            </div>
+
+            <div class="detail-description">
+                <h3>Descripción</h3>
+                <p>{{ product.description|linebreaks }}</p>
+            </div>
+
+            <div class="detail-actions">
+                <div class="quantity-selector">
+                    <button class="qty-btn minus">-</button>
+                    <input type="number" value="1" min="1" max="{{ product.stock }}" class="qty-input">
+                    <button class="qty-btn plus">+</button>
+                </div>
+
+                <button class="btn-primary detail-add-cart">AGREGAR AL CARRITO</button>
+            </div>
+
+            <div class="detail-meta">
+                <p>Stock disponible: {{ product.stock }} unidades</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -26,3 +26,10 @@ def product_list(request):
         'search_query': search_query
     }
     return render(request, 'products/product_list.html', context)
+
+from django.shortcuts import get_object_or_404
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'products/product_detail.html', {'product': product})
+

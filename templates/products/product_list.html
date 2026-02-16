@@ -48,11 +48,14 @@
             <div class="product-card-advanced">
                 <!-- Card Image & Overlays -->
                 <div class="card-image-container">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-                    {% else %}
-                    <div class="image-placeholder"></div>
-                    {% endif %}
+                    <a href="{% url 'product_detail' product.id %}">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                        {% else %}
+                        <div class="image-placeholder"></div>
+                        {% endif %}
+                    </a>
+
                     <span class="category-badge">{{ product.category.name }}</span>
                     {% if product.discount_percentage > 0 %}
                     <span class="discount-badge">%{{ product.discount_percentage }} off</span>
@@ -62,7 +65,8 @@
 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <h3>{{ product.name }}</h3>
+                    <h3><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h3>
+
                     <p class="description">{{ product.description|truncatewords:15 }}</p>
 
                     <div class="price-actions-row">
