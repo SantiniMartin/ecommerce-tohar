@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tohar Deco{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <div class="circle-logo"></div>
+        </div>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="#">Productos</a>
+            <a href="#">Sobre nosotros</a>
+        </nav>
+        <div class="auth-links">
+            {% if user.is_authenticated %}
+            <span>Hola, {{ user.username }}</span>
+            <a href="#">Cerrar sesión</a>
+            {% else %}
+            <a href="#">Iniciar sesión</a>
+            <a href="#">Registrarme</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Menú</h4>
+                <ul>
+                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="#">Productos</a></li>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Iniciar sesión</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Seguinos</h4>
+                <div class="social-icons">
+                    <div class="icon-box"></div>
+                    <div class="icon-box"></div>
+                    <div class="icon-box"></div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Medios de pagos</h4>
+                <div class="payment-icons">
+                    <div class="icon-box">Visa</div>
+                    <div class="icon-box">Visa</div>
+                    <div class="icon-box">Visa</div>
+                </div>
+                <div class="payment-icons">
+                    <div class="icon-box">Visa</div>
+                    <div class="icon-box">Visa</div>
+                    <div class="icon-box">Visa</div>
+                </div>
+            </div>
+            <div class="footer-column map-column">
+                <div class="map-placeholder"></div>
+            </div>
+        </div>
+        <div class="footer-contact">
+            <p>TE ESPERAMOS EN NUESTRO LOCAL!</p>
+            <div class="contact-details">
+                <span>📍 Av siempre viva 123</span>
+                <span>📞 +54 9 362 4 12345678</span>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

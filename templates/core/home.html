@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-grid">
+    <div class="hero-item item-1"></div>
+    <div class="hero-item item-2"></div>
+    <div class="hero-item item-3"></div>
+    <div class="hero-item item-4">
+        <h2>Lorem ipsum</h2>
+    </div>
+    <div class="hero-item item-5"></div>
+    <div class="hero-item item-6"></div>
+    <div class="hero-item item-7"></div>
+    <div class="hero-item item-8"></div>
+    <div class="hero-item item-9"></div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section">
+    <h3>Nuestros productos</h3>
+    <div class="categories-grid">
+        {% for category in categories %}
+        <div class="category-card">
+            <h4>{{ category.name }}</h4>
+        </div>
+        {% empty %}
+        <!-- Fallback for styling if db is empty or for visual check -->
+        <div class="category-card">
+            <h4>Velas</h4>
+        </div>
+        <div class="category-card">
+            <h4>Cuencos</h4>
+        </div>
+        <div class="category-card">
+            <h4>Cemento</h4>
+        </div>
+        <div class="category-card">
+            <h4>Floreros</h4>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="feature-item">
+        <div class="icon-placeholder">🚚</div>
+        <h4>Envíos a todo el país</h4>
+        <p>Consultar</p>
+    </div>
+    <div class="feature-item">
+        <div class="icon-placeholder">💳</div>
+        <h4>Cuotas sin interés</h4>
+        <p>Hasta 6 cuotas</p>
+    </div>
+    <div class="feature-item">
+        <div class="icon-placeholder">🛡️</div>
+        <h4>Compras seguras</h4>
+        <p>Protegemos tus datos</p>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="featured-section">
+    <h3>Productos destacados</h3>
+    <div class="featured-grid">
+        {% for product in featured_products %}
+        <div class="product-card">
+            <div class="product-image-placeholder"></div>
+            <h4>{{ product.name }}</h4>
+            <p>${{ product.price }}</p>
+        </div>
+        {% empty %}
+        <!-- Fallback for styling -->
+        <div class="product-card">
+            <div class="product-image-placeholder"></div>
+        </div>
+        <div class="product-card">
+            <div class="product-image-placeholder"></div>
+        </div>
+        <div class="product-card">
+            <div class="product-image-placeholder"></div>
+        </div>
+        <div class="product-card">
+            <div class="product-image-placeholder"></div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="action-button-container">
+        <a href="#" class="btn-primary">Ver todos los productos</a>
+    </div>
+</section>
+
+{% endblock %}
