@@ -48,12 +48,17 @@
             <div class="product-card-advanced">
                 <!-- Card Image & Overlays -->
                 <div class="card-image-container">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                    {% else %}
                     <div class="image-placeholder"></div>
+                    {% endif %}
                     <span class="category-badge">{{ product.category.name }}</span>
                     {% if product.discount_percentage > 0 %}
                     <span class="discount-badge">%{{ product.discount_percentage }} off</span>
                     {% endif %}
                 </div>
+
 
                 <!-- Card Body -->
                 <div class="card-body">

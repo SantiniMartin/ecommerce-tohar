@@ -18,6 +18,7 @@ class Product(models.Model):
     stock = models.IntegerField()
     # Using ForeignKey to Category as per request "agregues la categoría" implying a model
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     discount_percentage = models.PositiveIntegerField(default=0)
 
     @property
