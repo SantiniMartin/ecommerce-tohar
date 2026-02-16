@@ -17,16 +17,21 @@
         </div>
         <nav class="nav-links">
             <a href="{% url 'home' %}">Inicio</a>
-            <a href="#">Productos</a>
+            <a href="{% url 'product_list' %}">Productos</a>
             <a href="#">Sobre nosotros</a>
         </nav>
         <div class="auth-links">
             {% if user.is_authenticated %}
             <span>Hola, {{ user.username }}</span>
-            <a href="#">Cerrar sesión</a>
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit"
+                    style="background:none; border:none; color:#555; cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit;">Cerrar
+                    sesión</button>
+            </form>
             {% else %}
-            <a href="#">Iniciar sesión</a>
-            <a href="#">Registrarme</a>
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+            <a href="{% url 'register' %}">Registrarme</a>
             {% endif %}
         </div>
     </header>

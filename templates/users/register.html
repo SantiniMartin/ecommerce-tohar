@@ -1,0 +1,31 @@
+{% extends 'base_auth.html' %}
+
+{% block title %}Registrarse - Tohar Deco{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 4rem auto; padding: 2rem; border: 2px solid #333; text-align: center;">
+    <h2>Crear Cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div style="margin-bottom: 1rem; text-align: left;">
+            <div class="form-label" style="font-weight: bold; margin-bottom: 0.5rem;">
+                {{ field.label_tag }}
+            </div>
+            {{ field }}
+            {% if field.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {% for error in field.errors %}
+                <p style="margin: 0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Registrarse</button>
+    </form>
+    <p style="margin-top: 1rem;">
+        ¿Ya tienes cuenta? <a href="{% url 'login' %}" style="text-decoration: underline;">Inicia sesión</a>
+    </p>
+</div>
+{% endblock %}

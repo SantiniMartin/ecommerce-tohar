@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuestros Productos - Tohar Deco{% endblock %}
+
+{% block content %}
+<div class="product-page-container">
+    <!-- Sidebar -->
+    <aside class="filters-sidebar">
+        <div class="filter-header">
+            <h3><i class="filter-icon"></i> Filtros</h3>
+            <p>Buscar productos</p>
+            <form method="get" action="{% url 'product_list' %}" class="search-form">
+                <input type="text" name="q" placeholder="Florero" value="{{ search_query|default:'' }}">
+                {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="categories-list">
+            <h4>Categorías</h4>
+            <ul>
+                <li>
+                    <a href="{% url 'product_list' %}" class="{% if not selected_category %}active{% endif %}">
+                        Todas las categorías
+                    </a>
+                </li>
+                {% for cat in categories %}
+                <li>
+                    <a href="?category={{ cat.id }}" class="{% if selected_category == cat.id %}active{% endif %}">
+                        {{ cat.name }} <span>{{ cat.total_products }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Product Grid -->
+    <section class="products-grid-section">
+        <div class="products-header">
+            <h2>Nuestros productos</h2>
+            <p>Descubre nuestra colección exclusiva para ti</p>
+        </div>
+
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card-advanced">
+                <!-- Card Image & Overlays -->
+                <div class="card-image-container">
+                    <div class="image-placeholder"></div>
+                    <span class="category-badge">{{ product.category.name }}</span>
+                    {% if product.discount_percentage > 0 %}
+                    <span class="discount-badge">%{{ product.discount_percentage }} off</span>
+                    {% endif %}
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h3>{{ product.name }}</h3>
+                    <p class="description">{{ product.description|truncatewords:15 }}</p>
+
+                    <div class="price-actions-row">
+                        <div class="price-container">
+                            {% if product.discount_percentage > 0 %}
+                            <span class="old-price">${{ product.price }}</span>
+                            <span class="current-price">${{ product.final_price|floatformat:0 }}</span>
+                            {% else %}
+                            <span class="current-price">${{ product.price }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="actions-container">
+                            <button class="btn-icon cart-btn" title="Agregar al carrito">🛒</button>
+                            <button class="btn-primary buy-btn">COMPRAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No se encontraron productos.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

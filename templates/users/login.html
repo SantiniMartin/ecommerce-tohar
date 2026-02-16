@@ -1,0 +1,17 @@
+{% extends 'base_auth.html' %}
+
+{% block title %}Iniciar Sesión - Tohar Deco{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 4rem auto; padding: 2rem; border: 2px solid #333; text-align: center;">
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Ingresar</button>
+    </form>
+    <p style="margin-top: 1rem;">
+        ¿No tienes cuenta? <a href="{% url 'register' %}" style="text-decoration: underline;">Regístrate aquí</a>
+    </p>
+</div>
+{% endblock %}

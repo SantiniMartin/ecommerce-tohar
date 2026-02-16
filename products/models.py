@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 class Category(models.Model):
@@ -17,9 +18,14 @@ class Product(models.Model):
     stock = models.IntegerField()
     # Using ForeignKey to Category as per request "agregues la categoría" implying a model
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    discount_percentage = models.PositiveIntegerField(default=0)
 
-    def calc_discount(self, percentage):
-        return self.price * (1 - percentage / 100)
+    @property
+    def final_price(self):
+        if self.discount_percentage > 0:
+            return self.price * (1 - Decimal(self.discount_percentage) / 100)
+        return self.price
+
 
     def __str__(self):
         return self.name
