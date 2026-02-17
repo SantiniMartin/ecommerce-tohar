@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Tohar Deco{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.2">
+
 
     {% block extra_css %}{% endblock %}
 </head>
@@ -23,11 +24,11 @@
         </nav>
         <div class="auth-links">
             {% if user.is_authenticated %}
-            <span>Hola, {{ user.username }}</span>
+            <span class="user-auth">Hola, {{ user.username }}</span>
             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit"
-                    style="background:none; border:none; color:#555; cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit;">Cerrar
+                    style="background:none; border:none; color:var(--white); cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit hover:var(--primary-color);">Cerrar
                     sesión</button>
             </form>
             {% else %}
@@ -48,9 +49,9 @@
                 <h4>Menú</h4>
                 <ul>
                     <li><a href="{% url 'home' %}">Inicio</a></li>
-                    <li><a href="#">Productos</a></li>
-                    <li><a href="#">Sobre nosotros</a></li>
-                    <li><a href="#">Iniciar sesión</a></li>
+                    <li><a href="{% url 'product_list' %}">Productos</a></li>
+                    <li><a href="{% url 'about' %}">Sobre nosotros</a></li>
+                    <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
                 </ul>
             </div>
             <div class="footer-column">

@@ -1,5 +1,18 @@
 /* Global Styles */
+:root {
+    --bg-color: #F5F2ED;
+    --text-color: #333333;
+    --primary-color: #B2AC88;
+    /* Verde Salvia */
+    --accent-color: #D4AF37;
+    /* Oro Viejo */
+    --dark-green: #005C53;
+    /* Verde Oscuro para navbar/footer */
+    --white: #ffffff;
+}
+
 body {
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
@@ -7,7 +20,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
+
 
 main {
     flex: 1;
@@ -25,13 +41,14 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    border-bottom: 2px solid #333;
+    background-color: var(--dark-green);
+    border-bottom: none;
 }
 
 .circle-logo {
     width: 40px;
     height: 40px;
-    border: 2px solid #333;
+    border: 2px solid var(--white);
     border-radius: 50%;
 }
 
@@ -39,10 +56,15 @@ a {
 .auth-links a {
     margin: 0 1rem;
     font-weight: 500;
+    color: var(--white);
 }
 
 .auth-links a {
-    color: #555;
+    color: var(--white);
+}
+
+.auth-links button {
+    color: var(--white);
 }
 
 /* Hero Section (Grid) */
@@ -316,6 +338,11 @@ a {
     margin-bottom: 0.5rem;
 }
 
+.user-auth {
+    color: var(--white);
+    margin-right: 1rem;
+}
+
 .search-form input {
     width: 100%;
     padding: 8px;
@@ -480,7 +507,9 @@ a {
 
 /* Footer */
 .main-footer {
-    border-top: 2px solid #333;
+    background-color: var(--dark-green);
+    color: var(--white);
+    border-top: none;
     padding: 3rem 2rem;
     margin-top: 4rem;
 }
@@ -495,6 +524,7 @@ a {
 
 .footer-column h4 {
     margin-bottom: 1rem;
+    color: var(--white);
 }
 
 .footer-column ul {
@@ -504,6 +534,10 @@ a {
 
 .footer-column ul li {
     margin-bottom: 0.5rem;
+}
+
+.footer-column a {
+    color: var(--white);
 }
 
 .social-icons,
@@ -516,18 +550,19 @@ a {
 .icon-box {
     width: 40px;
     height: 40px;
-    border: 2px solid #333;
+    border: 2px solid var(--white);
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
+    color: var(--white);
 }
 
 .map-placeholder {
     width: 150px;
     height: 150px;
-    border: 2px solid #333;
+    border: 2px solid var(--white);
     border-radius: 50%;
     margin: 0 auto;
 }
@@ -537,12 +572,14 @@ a {
     text-align: left;
     max-width: 1200px;
     margin-right: auto;
+    color: var(--white);
 }
 
 .contact-details {
     display: flex;
     gap: 2rem;
     font-weight: bold;
+    color: var(--white);
 }
 
 /* Product Detail */
