@@ -19,7 +19,7 @@
         <nav class="nav-links">
             <a href="{% url 'home' %}">Inicio</a>
             <a href="{% url 'product_list' %}">Productos</a>
-            <a href="#">Sobre nosotros</a>
+            <a href="{% url 'about' %}">Sobre nosotros</a>
         </nav>
         <div class="auth-links">
             {% if user.is_authenticated %}

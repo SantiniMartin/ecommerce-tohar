@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sobre Nosotros - Tohar Deco{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Debug info: Page Loaded -->
+
+
+    <!-- Section 1: Quienes somos -->
+    <section class="about-section who-we-are">
+        <h1 class="section-title">Quienes somos</h1>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Hola! soy Cosme fulanito</p>
+                <p>Somos un equipo apasionado por el diseño y la decoración. En Tohar Deco, buscamos transformar
+                    espacios en hogares llenos de vida y estilo.</p>
+                <p>Nuestra misión es ofrecer productos únicos, hechos con dedicación y materiales de alta calidad,
+                    pensando siempre en la funcionalidad y la estética.</p>
+            </div>
+            <div class="about-image-container">
+                <!-- Placeholder for creators image -->
+                <div class="creators-image-placeholder">
+                    <span>Foto de los creadores</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Estamos ubicados -->
+    <section class="about-section location-section">
+        <h2 class="section-title">Estamos ubicados en:</h2>
+        <div class="map-container">
+            <!-- Embedding a google map placeholder or iframe -->
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3540.2366304537756!2d-58.97607792453673!3d-27.46197111637777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450cfs43b3531b%3A0x723223030303030!2sResistencia%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1700000000000!5m2!1ses-419!2sar"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Section 3: Contactanos -->
+    <section class="about-section contact-section">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contact-card">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" rows="5" class="form-input"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary contact-submit-btn">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

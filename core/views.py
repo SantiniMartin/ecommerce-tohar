@@ -8,3 +8,7 @@ def home(request):
         'categories': categories,
         'featured_products': featured_products
     })
+
+def about(request):
+    return render(request, 'core/about.html')
+
