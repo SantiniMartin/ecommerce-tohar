@@ -28,7 +28,7 @@
             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit"
-                    style="background:none; border:none; color:var(--white); cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit hover:var(--primary-color);">Cerrar
+                    style="background:none; border:none; color:var(--white); cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit;">Cerrar
                     sesión</button>
             </form>
             {% else %}
