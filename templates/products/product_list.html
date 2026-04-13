@@ -80,8 +80,15 @@
                         </div>
 
                         <div class="actions-container">
-                            <button class="btn-icon cart-btn" title="Agregar al carrito">🛒</button>
-                            <button class="btn-primary buy-btn">COMPRAR</button>
+                            {% if user.is_authenticated %}
+                            <form action="{% url 'cart:add' product.id %}" method="post" style="width: 100%;">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-primary buy-btn" style="width: 100%; text-align: center;">AGREGAR AL CARRITO</button>
+                            </form>
+                            {% else %}
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary buy-btn" style="width: 100%; text-align: center; display: block; box-sizing: border-box; text-decoration: none;">AGREGAR AL CARRITO</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

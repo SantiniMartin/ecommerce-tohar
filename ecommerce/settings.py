@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'products',
     'orders',
     'core',
+    'cart',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -67,9 +68,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart_context', 
             ],
         },
-    },
+    }    
 ]
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
