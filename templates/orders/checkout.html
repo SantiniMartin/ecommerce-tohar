@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - Pasarela de Pago{% endblock %}
+
+{% block content %}
+<div class="checkout-container"
+    style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+    <!-- Resumen de compra -->
+    <div class="checkout-summary"
+        style="background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 1.5rem; color: #222;">Tu Orden</h3>
+        <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+            {% for item in cart %}
+            <li
+                style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                    {% endif %}
+                    <div>
+                        <p style="margin: 0; font-weight: bold; color: #333;">{{ item.product.name }}</p>
+                        <small style="color: #666;">Cant: {{ item.quantity }}</small>
+                    </div>
+                </div>
+                <div style="font-weight: bold; color: #333;">
+                    ${{ item.total_price }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div
+            style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: bold; padding-top: 1rem; border-top: 2px solid #D4AF37;">
+            <span>Total a pagar</span>
+            <span style="color: #D4AF37;">${{ total }}</span>
+        </div>
+    </div>
+
+    <!-- Formulario de Pago Simulado -->
+    <div class="checkout-form-section"
+        style="background: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 1.5rem; color: #222;">Detalles de Pago y Envío</h3>
+
+        <form method="post" action="{% url 'orders:checkout' %}">
+            {% csrf_token %}
+
+            <h4
+                style="margin-bottom: 1rem; color: #555; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
+                Información de Envío</h4>
+            <div style="margin-bottom: 1rem;">
+                {{ form.full_name.label_tag }}
+                {{ form.full_name }}
+            </div>
+            <div style="margin-bottom: 1rem;">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    {{ form.city.label_tag }}
+                    {{ form.city }}
+                </div>
+                <div>
+                    {{ form.zip_code.label_tag }}
+                    {{ form.zip_code }}
+                </div>
+            </div>
+
+            <h4
+                style="margin-bottom: 1rem; color: #555; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-top: 2rem;">
+                Pago(Prueba)</h4>
+            <div style="margin-bottom: 1rem;">
+                {{ form.card_number.label_tag }}
+                {{ form.card_number }}
+            </div>
+            <div style="margin-bottom: 1rem;">
+                {{ form.card_name.label_tag }}
+                {{ form.card_name }}
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <div>
+                    {{ form.expiration_date.label_tag }}
+                    {{ form.expiration_date }}
+                </div>
+                <div>
+                    {{ form.cvv.label_tag }}
+                    {{ form.cvv }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary"
+                style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 4px; cursor: pointer; background: #222; color: #fff; border: none; transition: 0.3s; font-weight: bold;">
+                Realizar Pago y Finalizar
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<style>
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #D4AF37;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #444;
+    }
+
+    @media (max-width: 768px) {
+        .checkout-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
