@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi carrito - Tohar Deco{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2 class="cart-title">Mi carrito <span>({{ cart_item_count }} ítem{{ cart_item_count|pluralize:"s" }})</span></h2>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not cart_item_count %}
+    <div class="empty-cart">
+        <h4 style="color:#666; margin-bottom: 1.5rem;">Tu carrito está vacío</h4>
+        <a href="{% url 'product_list' %}" class="btn-primary">Seguir comprando</a>
+    </div>
+    {% else %}
+    <div class="cart-content-grid">
+        <div class="cart-items-section">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th class="text-center">Precio unit.</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                        <td>
+                            <div class="cart-item-info">
+                                {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                                    class="cart-item-img" />
+                                {% else %}
+                                <div class="cart-item-img-placeholder"></div>
+                                {% endif %}
+                                <div>
+                                    <p class="cart-item-name">{{ item.product.name }}</p>
+                                    {% if item.product.discount_percentage > 0 %}
+                                    <span class="discount-badge-cart">-{{ item.product.discount_percentage }}%
+                                        OFF</span>
+                                    {% endif %}
+                                    <p class="cart-item-stock">Stock disponible: {{ item.product.stock }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            {% if item.product.discount_percentage > 0 %}
+                            <span class="old-price-cart">${{ item.product.price }}</span><br>
+                            {% endif %}
+                            <span class="current-price-cart">${{ item.final_price }}</span>
+                        </td>
+                        <td class="text-center">
+                            <form action="{% url 'cart:add' item.product.id %}" method="post"
+                                style="display:inline-block;">
+                                {% csrf_token %}
+                                <input type="hidden" name="override" value="true" />
+                                <input type="hidden" name="next" value="{% url 'cart:detail' %}" />
+                                <div class="quantity-selector-cart">
+                                    <button type="button" class="qty-btn-cart"
+                                        onclick="var i=this.nextElementSibling;i.stepDown();this.form.submit();">−</button>
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                                        max="{{ item.product.stock }}" class="qty-input-cart"
+                                        onchange="this.form.submit()" />
+                                    <button type="button" class="qty-btn-cart"
+                                        onclick="var i=this.previousElementSibling;i.stepUp();this.form.submit();">+</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="text-center" style="font-weight: bold;">
+                            ${{ item.total_price }}
+                        </td>
+                        <td class="text-center">
+                            <form action="{% url 'cart:remove' item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-btn" title="Eliminar del carrito">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cart-actions">
+                <a href="{% url 'product_list' %}" class="btn-secondary">Seguir comprando</a>
+                <form id="clear-cart-form" action="{% url 'cart:clear' %}" method="post">
+                    {% csrf_token %}
+                    <button type="button" id="clear-cart-btn" class="btn-secondary"
+                        style="color: #d9534f; border-color: #d9534f;">Vaciar
+                        carrito</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="cart-summary-section">
+            <div class="summary-card">
+                <div class="summary-header">
+                    Resumen de compra
+                </div>
+                <div class="summary-body">
+                    <ul class="summary-list">
+                        {% for item in cart %}
+                        <li>
+                            <span>{{ item.product.name }} <small>× {{ item.quantity }}</small></span>
+                            <span>${{ item.total_price }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span style="color:#D4AF37;">${{ total }}</span>
+                    </div>
+                    <a href="{% url 'orders:checkout' %}" class="btn-checkout">Finalizar compra</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Modal de confirmación para vaciar carrito -->
+<div class="modal-overlay" id="clear-cart-modal">
+    <div class="modal-card">
+        <div class="modal-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+        </div>
+        <h3 class="modal-title">¿Vaciar el carrito?</h3>
+        <p class="modal-text">Se eliminarán todos los productos de tu carrito. Esta acción no se puede deshacer.</p>
+        <div class="modal-actions">
+            <button type="button" class="modal-btn modal-btn-cancel" id="modal-cancel">Cancelar</button>
+            <button type="button" class="modal-btn modal-btn-confirm" id="modal-confirm">Sí, vaciar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const openBtn = document.getElementById('clear-cart-btn');
+        const modal = document.getElementById('clear-cart-modal');
+        const cancelBtn = document.getElementById('modal-cancel');
+        const confirmBtn = document.getElementById('modal-confirm');
+        const form = document.getElementById('clear-cart-form');
+
+        if (!openBtn || !modal) return;
+
+        openBtn.addEventListener('click', function () {
+            modal.classList.add('active');
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            modal.classList.remove('active');
+        });
+
+        confirmBtn.addEventListener('click', function () {
+            form.submit();
+        });
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+    })();
+</script>
+{% endblock %}

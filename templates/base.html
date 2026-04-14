@@ -17,24 +17,39 @@
         <div class="logo">
             <div class="circle-logo"></div>
         </div>
-        <nav class="nav-links">
-            <a href="{% url 'home' %}">Inicio</a>
-            <a href="{% url 'product_list' %}">Productos</a>
-            <a href="{% url 'about' %}">Sobre nosotros</a>
-        </nav>
-        <div class="auth-links">
-            {% if user.is_authenticated %}
-            <span class="user-auth">Hola, {{ user.username }}</span>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit"
-                    style="background:none; border:none; color:var(--white); cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit;">Cerrar
-                    sesión</button>
-            </form>
-            {% else %}
-            <a href="{% url 'login' %}">Iniciar sesión</a>
-            <a href="{% url 'register' %}">Registrarme</a>
-            {% endif %}
+        <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <nav class="nav-links">
+                <a href="{% url 'home' %}">Inicio</a>
+                <a href="{% url 'product_list' %}">Productos</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'cart:detail' %}" class="cart-nav-link">
+                    Carrito
+                    {% if cart_item_count and cart_item_count > 0 %}
+                    <span class="cart-nav-badge">{{ cart_item_count }}</span>
+                    {% endif %}
+                </a>
+                {% endif %}
+                <a href="{% url 'about' %}">Sobre nosotros</a>
+            </nav>
+            <div class="auth-links">
+                {% if user.is_authenticated %}
+                <span class="user-auth">Hola, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit"
+                        style="background:none; border:none; color:var(--white); cursor:pointer; font-weight:500; font-family:inherit; font-size:inherit;">Cerrar
+                        sesión</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                <a href="{% url 'register' %}">Registrarme</a>
+                {% endif %}
+            </div>
         </div>
     </header>
 
@@ -88,6 +103,19 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (hamburgerBtn && navMenu) {
+                hamburgerBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    hamburgerBtn.classList.toggle('active');
+                });
+            }
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 

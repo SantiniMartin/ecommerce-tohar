@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pago Exitoso - Pasarela de Prueba{% endblock %}
+
+{% block content %}
+<div class="success-container"
+    style="max-width: 600px; margin: 5rem auto; text-align: center; background: #fff; padding: 3rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+
+    <div
+        style="width: 80px; height: 80px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+    </div>
+
+    <h2 style="color: #222; margin-bottom: 1rem;">¡Pago Aprobado!</h2>
+    <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">
+        Tu pago ha sido procesado correctamente. Gracias por completar esta compra de prueba.
+    </p>
+
+    {% if order %}
+    <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 6px; margin-bottom: 2rem; text-align: left;">
+        <h4 style="margin-bottom: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;">Detalles de Orden</h4>
+        <p style="margin: 0.5rem 0;"><strong>Orden #:</strong> {{ order.id }}</p>
+        <p style="margin: 0.5rem 0;"><strong>Total Pagado:</strong> ${{ order.total_amount }}</p>
+        <p style="margin: 0.5rem 0;"><strong>Estado:</strong> {{ order.get_status_display }}</p>
+    </div>
+    {% endif %}
+
+    <div style="display: flex; justify-content: center; gap: 1rem;">
+        <a href="{% url 'home' %}" class="btn-primary"
+            style="padding: 0.75rem 2rem; border-radius: 4px; text-decoration: none;">Volver al Inicio</a>
+        <a href="{% url 'product_list' %}" class="btn-secondary"
+            style="padding: 0.75rem 2rem; border-radius: 4px; text-decoration: none; border: 1px solid #222; color: #222;">Seguir
+            Comprando</a>
+    </div>
+
+</div>
+{% endblock %}

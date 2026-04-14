@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-*n)a2rbz_n#ef5m*724z$jwd78dy%zy#hfea32g_1_&i5n9z2q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'products',
     'orders',
     'core',
+    'cart',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -67,9 +69,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart_context', 
             ],
         },
-    },
+    }    
 ]
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'

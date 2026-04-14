@@ -71,6 +71,15 @@
             <div class="product-image-placeholder"></div>
             <h4>{{ product.name }}</h4>
             <p>${{ product.price }}</p>
+            {% if user.is_authenticated %}
+            <form action="{% url 'cart:add' product.id %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn-primary buy-btn" style="width: 100%;">AGREGAR AL CARRITO</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary buy-btn" style="width: 100%; margin-top: 10px; display: block; box-sizing: border-box; text-align: center; text-decoration: none;">AGREGAR AL CARRITO</a>
+            {% endif %}
         </div>
         {% empty %}
         <!-- Fallback for styling -->
